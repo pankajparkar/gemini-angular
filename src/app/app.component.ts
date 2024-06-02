@@ -1,33 +1,27 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDrawerMode, MatSidenav, MatSidenavContainer, MatSidenavContent, } from '@angular/material/sidenav';
 import { MatRadioButton, MatRadioGroup, } from '@angular/material/radio';
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { FileConversionService } from './file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'ga-root',
   standalone: true,
   template: `
-    <ga-navbar></ga-navbar>
-
+    <ga-navbar (onToggle)="sidenav()?.toggle()"></ga-navbar>
     <mat-sidenav-container class="example-container">
-      <mat-sidenav #sidenav [mode]="mode.value || 'over'">
-        <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+      <mat-sidenav [mode]="'push'">
+        <p><button mat-button (click)="sidenav()?.toggle()">Toggle</button></p>
       </mat-sidenav>
       <mat-sidenav-content>
-        <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
-        <p>
-          <mat-radio-group class="example-radio-group" [formControl]="mode">
-            <label>Mode:</label>
-            <mat-radio-button value="over">Over</mat-radio-button>
-            <mat-radio-button value="side">Side</mat-radio-button>
-            <mat-radio-button value="push">Push</mat-radio-button>
-          </mat-radio-group>
-        </p>
+      <p><button mat-button (click)="sidenav()?.toggle()">Toggle</button></p>
+        Test
+        <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
   `,
@@ -37,11 +31,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
     MatRadioGroup,
     MatRadioButton,
     ReactiveFormsModule,
+    RouterOutlet,
   ]
 })
 export class AppComponent {
   mode = new FormControl('over' as MatDrawerMode);
-
+  sidenav = viewChild(MatSidenav);
   public http = inject(HttpClient);
   private fileConversionService = inject(FileConversionService);
 

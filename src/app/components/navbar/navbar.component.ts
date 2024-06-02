@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatToolbar } from '@angular/material/toolbar';
@@ -14,7 +14,7 @@ import { MatToolbar } from '@angular/material/toolbar';
   ],
   template: `
   <mat-toolbar>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="onToggle.emit()">
       <mat-icon>menu</mat-icon>
     </button>
     <span>Gemini Angular</span>
@@ -34,5 +34,5 @@ import { MatToolbar } from '@angular/material/toolbar';
   `
 })
 export class NavbarComponent {
-
+  onToggle = output();
 }
