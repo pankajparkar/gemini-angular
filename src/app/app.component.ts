@@ -8,7 +8,7 @@ import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/ge
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'ga-root',
@@ -19,30 +19,25 @@ import { RouterOutlet } from '@angular/router';
       <mat-sidenav [mode]="'push'">
         <p>
           <mat-list role="list" (click)="sidenav()?.toggle()">
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" routerLink="gemini-pro">
               Gemini Pro
             </mat-list-item>
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" routerLink="gemini-pro-chat">
               Gemini ProChat
             </mat-list-item>
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" routerLink="gemini-pro-vision-images">
               Gemini Pro Vision Images
             </mat-list-item>
-            <mat-list-item role="listitem">
-              Gemini Pro Vision Images
-            </mat-list-item>
-            <mat-list-item role="listitem">
+            <mat-list-item role="listitem" routerLink="gemini-pro-streaming">
               Gemini Pro Streaming
             </mat-list-item>
-            <!-- <mat-list-item role="listitem">
+            <!-- <mat-list-item role="listitem" routerLink="gemini-pro">
               Gemini Pro With Vertex AI Via REST
             </mat-list-item> -->
           </mat-list>
         </p>
       </mat-sidenav>
       <mat-sidenav-content>
-      <p><button mat-button (click)="sidenav()?.toggle()">Toggle</button></p>
-        Test
         <router-outlet></router-outlet>
       </mat-sidenav-content>
     </mat-sidenav-container>
@@ -56,6 +51,7 @@ import { RouterOutlet } from '@angular/router';
     MatRadioButton,
     ReactiveFormsModule,
     RouterOutlet,
+    RouterLink,
   ],
   styles: `
     .mat-sidenav-container {
