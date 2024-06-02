@@ -2,12 +2,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FileConversionService } from './file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'ga-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  standalone: true,
+  template: `
+    <ga-navbar></ga-navbar>
+  `,
+  imports: [
+    NavbarComponent,
+  ]
 })
 export class AppComponent {
   title = 'google-ai-gemini-angular';
