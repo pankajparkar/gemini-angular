@@ -3,7 +3,7 @@ import { MatDrawerMode, MatSidenav, MatSidenavContainer, MatSidenavContent, } fr
 import { MatRadioButton, MatRadioGroup, } from '@angular/material/radio';
 import { MatList, MatListItem } from '@angular/material/list';
 import { Component, inject, viewChild } from '@angular/core';
-import { FileConversionService } from './file-conversion.service';
+import { FileConversionService } from './services/file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
