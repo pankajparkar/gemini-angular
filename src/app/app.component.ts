@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDrawerMode, MatSidenav, MatSidenavContainer, MatSidenavContent, } from '@angular/material/sidenav';
 import { MatRadioButton, MatRadioGroup, } from '@angular/material/radio';
+import { MatList, MatListItem } from '@angular/material/list';
 import { Component, inject, viewChild } from '@angular/core';
 import { FileConversionService } from './file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
@@ -16,7 +17,28 @@ import { RouterOutlet } from '@angular/router';
     <ga-navbar (onToggle)="sidenav()?.toggle()"></ga-navbar>
     <mat-sidenav-container class="example-container">
       <mat-sidenav [mode]="'push'">
-        <p><button mat-button (click)="sidenav()?.toggle()">Toggle</button></p>
+        <p>
+          <mat-list role="list" (click)="sidenav()?.toggle()">
+            <mat-list-item role="listitem">
+              Gemini Pro
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              Gemini ProChat
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              Gemini Pro Vision Images
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              Gemini Pro Vision Images
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              Gemini Pro Streaming
+            </mat-list-item>
+            <!-- <mat-list-item role="listitem">
+              Gemini Pro With Vertex AI Via REST
+            </mat-list-item> -->
+          </mat-list>
+        </p>
       </mat-sidenav>
       <mat-sidenav-content>
       <p><button mat-button (click)="sidenav()?.toggle()">Toggle</button></p>
@@ -29,10 +51,21 @@ import { RouterOutlet } from '@angular/router';
     NavbarComponent,
     MatSidenav, MatSidenavContainer, MatSidenavContent,
     MatRadioGroup,
+    MatList,
+    MatListItem,
     MatRadioButton,
     ReactiveFormsModule,
     RouterOutlet,
-  ]
+  ],
+  styles: `
+    .mat-sidenav-container {
+      position: absolute;
+      top: 64px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+  `
 })
 export class AppComponent {
   mode = new FormControl('over' as MatDrawerMode);
