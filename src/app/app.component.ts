@@ -1,22 +1,46 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatDrawerMode, MatSidenav, MatSidenavContainer, MatSidenavContent, } from '@angular/material/sidenav';
+import { MatRadioButton, MatRadioGroup, } from '@angular/material/radio';
 import { Component, inject } from '@angular/core';
 import { FileConversionService } from './file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { environment } from 'src/environments/environment';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'ga-root',
   standalone: true,
   template: `
     <ga-navbar></ga-navbar>
+
+    <mat-sidenav-container class="example-container">
+      <mat-sidenav #sidenav [mode]="mode.value || 'over'">
+        <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <p><button mat-button (click)="sidenav.toggle()">Toggle</button></p>
+        <p>
+          <mat-radio-group class="example-radio-group" [formControl]="mode">
+            <label>Mode:</label>
+            <mat-radio-button value="over">Over</mat-radio-button>
+            <mat-radio-button value="side">Side</mat-radio-button>
+            <mat-radio-button value="push">Push</mat-radio-button>
+          </mat-radio-group>
+        </p>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   `,
   imports: [
     NavbarComponent,
+    MatSidenav, MatSidenavContainer, MatSidenavContent,
+    MatRadioGroup,
+    MatRadioButton,
+    ReactiveFormsModule,
   ]
 })
 export class AppComponent {
-  title = 'google-ai-gemini-angular';
+  mode = new FormControl('over' as MatDrawerMode);
 
   public http = inject(HttpClient);
   private fileConversionService = inject(FileConversionService);
