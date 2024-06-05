@@ -15,9 +15,7 @@ import { environment } from 'src/environments/environment';
     MatButton,
     MatFormField,
     MatLabel,
-    ReactiveFormsModule,
     MatInput,
-    FormsModule,
   ],
   template: `
     <mat-form-field>
