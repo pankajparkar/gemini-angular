@@ -4,8 +4,13 @@ import { GeminiProChatComponent } from './components/gemini-pro-chat.component';
 import { GeminiProVisionImagesComponent } from './components/gemini-pro-vision-images.component';
 import { GeminiProStreamingComponent } from './components/gemini-pro-streaming.component';
 import { GeminiProWithVertexAiComponent } from './components/gemini-pro-with-vertex-ai.component';
+import { WelcomeComponent } from './components/welcome.component';
 
 const routes: Routes = [
+    {
+        path: 'welcome',
+        component: WelcomeComponent
+    },
     {
         path: 'gemini-pro',
         component: GeminiProComponent
@@ -28,7 +33,7 @@ const routes: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'gemini-pro'
+        redirectTo: 'welcome'
     },
 ];
 
