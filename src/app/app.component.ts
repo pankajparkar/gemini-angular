@@ -67,7 +67,6 @@ export class AppComponent {
   mode = new FormControl('over' as MatDrawerMode);
   sidenav = viewChild(MatSidenav);
   public http = inject(HttpClient);
-  private fileConversionService = inject(FileConversionService);
 
   ngOnInit(): void {
     // Google AI
@@ -83,55 +82,6 @@ export class AppComponent {
   ////////////////////////////////////////////////////////
   // Google AI - requires API KEY from Google AI Studio
   ////////////////////////////////////////////////////////
-
-  async TestGeminiProVisionImages() {
-    try {
-      let imageBase64 = await this.fileConversionService.convertToBase64(
-        'assets/baked_goods_2.jpeg'
-      );
-
-      // Check for successful conversion to Base64
-      if (typeof imageBase64 !== 'string') {
-        console.error('Image conversion to Base64 failed.');
-        return;
-      }
-
-      // Gemini Client
-      const genAI = new GoogleGenerativeAI(environment.API_KEY);
-      const generationConfig = {
-        safetySettings: [
-          {
-            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-          },
-        ],
-        maxOutputTokens: 100,
-      };
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-pro-vision',
-        ...generationConfig,
-      });
-
-      let prompt = [
-        {
-          inlineData: {
-            mimeType: 'image/jpeg',
-            data: imageBase64,
-          },
-        },
-        {
-          text: 'Provide a recipe.',
-        },
-      ];
-
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      console.log(response.candidates?.[0].content.parts[0].text);
-      console.log(response);
-    } catch (error) {
-      console.error('Error converting file to Base64', error);
-    }
-  }
 
   async TestGeminiProStreaming() {
     // Gemini Client
