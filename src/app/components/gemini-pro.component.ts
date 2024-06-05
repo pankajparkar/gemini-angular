@@ -19,7 +19,6 @@ import { MatInput } from '@angular/material/input';
     FormsModule,
   ],
   template: `
-    {{ messages().length }}
     <mat-form-field>
       <mat-label>Enter your email</mat-label>
       <input matInput
@@ -51,6 +50,7 @@ export class GeminiProComponent {
   enter() {
     this.updateMessage(this.text());
     this.testGeminiPro(this.text());
+    this.text.set('');
   }
 
   updateMessage(text: string) {

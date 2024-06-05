@@ -73,7 +73,7 @@ export class AppComponent {
     // Google AI
     //this.TestGeminiPro();
     //this.TestGeminiProChat();
-    this.TestGeminiProVisionImages();
+    // this.TestGeminiProVisionImages();
     // this.TestGeminiProStreaming();
 
     // Vertex AI
