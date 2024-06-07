@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
     providedIn: 'root',
 })
 export class FileConversionService {
-    constructor(private http: HttpClient) { }
+    private http = inject(HttpClient);
     async convertToBase64(filePath: string): Promise<string | ArrayBuffer | null> {
         const blob = await firstValueFrom(this.http.get(filePath, { responseType: 'blob' }));
         return new Promise((resolve, reject) => {
