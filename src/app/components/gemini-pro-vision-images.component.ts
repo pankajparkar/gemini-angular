@@ -7,6 +7,24 @@ import { FileConversionService } from '../services/file-conversion.service';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 
+// Gemini Client
+const genAI = new GoogleGenerativeAI(environment.API_KEY);
+const generationConfig = {
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
+  maxOutputTokens: 100,
+};
+const model = genAI.getGenerativeModel({
+  model: 'gemini-pro-vision',
+  ...generationConfig,
+});
+
+
+
 @Component({
   selector: 'ga-gemini-pro-vision-images',
   standalone: true,
@@ -49,27 +67,11 @@ export class GeminiProVisionImagesComponent {
         return;
       }
 
-      // Gemini Client
-      const genAI = new GoogleGenerativeAI(environment.API_KEY);
-      const generationConfig = {
-        safetySettings: [
-          {
-            category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-            threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-          },
-        ],
-        maxOutputTokens: 100,
-      };
-      const model = genAI.getGenerativeModel({
-        model: 'gemini-pro-vision',
-        ...generationConfig,
-      });
-
       let prompt = [
         {
           inlineData: {
             mimeType: 'image/jpeg',
-            data: imageBase64,
+            data: imageBase64, //<- todo
           },
         },
         {

@@ -4,6 +4,22 @@ import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
+// Gemini Client
+const genAI = new GoogleGenerativeAI(environment.API_KEY);
+const generationConfig = {
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
+  maxOutputTokens: 100,
+};
+const model = genAI.getGenerativeModel({
+  model: 'gemini-pro',
+  ...generationConfig,
+});
+
 @Component({
   selector: 'ga-gemini-pro',
   standalone: true,
@@ -40,22 +56,6 @@ export class GeminiProComponent {
   }
 
   async testGeminiPro(prompt: string) {
-    // Gemini Client
-    const genAI = new GoogleGenerativeAI(environment.API_KEY);
-    const generationConfig = {
-      safetySettings: [
-        {
-          category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        },
-      ],
-      maxOutputTokens: 100,
-    };
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-pro',
-      ...generationConfig,
-    });
-
     const result = await model.generateContent(prompt);
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);

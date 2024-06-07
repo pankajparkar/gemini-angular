@@ -1,5 +1,5 @@
 import { NgClass, NgFor } from '@angular/common';
-import { Component, model, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
@@ -10,9 +10,40 @@ import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
 const messages = [
-  { content: 'Hi there!', isUser: false, },
+  { content: 'Hi there!', isUser: true, },
   { content: 'Great to meet you. What would you like to know?!', isUser: false, },
 ];
+
+const genAI = new GoogleGenerativeAI(environment.API_KEY);
+const generationConfig = {
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
+  //maxOutputTokens: 100,
+};
+const model = genAI.getGenerativeModel({
+  model: 'gemini-pro',
+  ...generationConfig,
+});
+
+const chat = model.startChat({
+  history: [
+    {
+      role: "user",
+      parts: [{ text: "Hi there!" }],
+    },
+    {
+      role: "model",
+      parts: [{ text: "Great to meet you. What would you like to know?" }],
+    },
+  ],
+  generationConfig: {
+    maxOutputTokens: 100,
+  },
+});
 
 @Component({
   selector: 'ga-gemini-pro-chat',
@@ -61,38 +92,6 @@ export class GeminiProChatComponent {
   }
 
   private async testGeminiProChat(prompt: string) {
-    // Gemini Client
-    const genAI = new GoogleGenerativeAI(environment.API_KEY);
-    const generationConfig = {
-      safetySettings: [
-        {
-          category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        },
-      ],
-      //maxOutputTokens: 100,
-    };
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-pro',
-      ...generationConfig,
-    });
-
-    const chat = model.startChat({
-      history: [
-        {
-          role: "user",
-          parts: [{ text: "Hi there!" }],
-        },
-        {
-          role: "model",
-          parts: [{ text: "Great to meet you. What would you like to know?" }],
-        },
-      ],
-      generationConfig: {
-        maxOutputTokens: 100,
-      },
-    });
-
     const result = await chat.sendMessage(prompt);
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);
