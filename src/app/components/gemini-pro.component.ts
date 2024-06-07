@@ -1,64 +1,41 @@
-import { Component, model, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
-import { MatButton } from '@angular/material/button';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
+import { ChatComponent } from './chat.component';
+import { Message } from '../models';
 
 @Component({
   selector: 'ga-gemini-pro',
   standalone: true,
   imports: [
-    MatButton,
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatInput,
-    MatError,
-    FormsModule,
+    ChatComponent,
   ],
   template: `
-    <mat-form-field>
-      <mat-label>Enter your email</mat-label>
-      <input matInput
-        placeholder="pat@example.com"
-        [(ngModel)]="text"
-        required>
-      @if (!text) {
-        <mat-error>{{errorMessage}}</mat-error>
-      }
-    </mat-form-field>
-
-    <ul>
-      @for (message of messages(); track $index) {
-        <li>
-          <pre [innerHTML]="message"></pre>
-        </li>
-      }
-    </ul>
-    <button mat-button (click)="enter()">
-      Enter
-    </button>
+    <h2>Chat</h2>
+    <ga-chat
+      [messages]="messages()"
+      (send)="enter($event)"
+    >
+    </ga-chat>
   `,
   styles: ``
 })
 export class GeminiProComponent {
-  text = model('');
+  messages = signal<Message[]>([]);
 
-  errorMessage = 'Field is mandatory';
-  messages = signal<string[]>([]);
-
-  enter() {
-    this.updateMessage(this.text());
-    this.testGeminiPro(this.text());
-    this.text.set('');
+  enter(text: string) {
+    this.sendMessage(text);
+    this.testGeminiPro(text);
   }
 
-  updateMessage(text: string) {
+  private sendMessage(text: string, isUser: boolean = true) {
+    if (!text) {
+      return;
+    }
+
     this.messages.set([
       ...this.messages(),
-      text,
+      { content: text, isUser, }
     ]);
   }
 
@@ -83,6 +60,6 @@ export class GeminiProComponent {
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);
     console.log(response.text());
-    this.updateMessage(response.text());
+    this.sendMessage(response.text(), false);
   }
 }

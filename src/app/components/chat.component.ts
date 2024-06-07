@@ -3,8 +3,9 @@ import { Component, input, model, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { Message } from '../models';
-import { MatButton } from '@angular/material/button';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'ga-chat',
@@ -16,6 +17,8 @@ import { MatInput } from '@angular/material/input';
     FormsModule,
     MatButton,
     MatInput,
+    MatIcon,
+    MatIconButton,
   ],
   template: `
     <ul class="chat-list">
@@ -30,22 +33,38 @@ import { MatInput } from '@angular/material/input';
       }
     </ul>
 
-    <div>
-      <mat-form-field>
+    <div class="send-btn-wrapper">
+      <mat-form-field appearance="outline">
         <mat-label>Type your message...</mat-label>
         <textarea matInput [(ngModel)]="text" placeholder="Type your message..."></textarea>
       </mat-form-field>
+      <button mat-icon-button (click)="enter()">
+        <mat-icon>send</mat-icon>
+      </button>
     </div>
-
-    <button mat-button (click)="enter()">
-      Enter
-    </button>
   `,
   styles: `
+    .send-btn-wrapper {
+      bottom: 0;
+      display: flex;
+      flex-flow: row noWrap;
+      padding: 12px;
+      position: absolute;
+      width: 100%;
+
+      .mat-mdc-form-field {
+        display: flex;
+        width: 96%;
+      }
+    }
+
     .chat-list {
-      list-style: none;
-      padding: 0;
+      top: 0;
+      bottom: 124px;
       margin: 0;
+      list-style: none;
+      padding: 12px;
+      position: relative;
     }
 
     .left-message,
