@@ -1,8 +1,4 @@
 import { Component, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
@@ -32,12 +28,6 @@ const model = genAI.getGenerativeModel({
   selector: 'ga-gemini-pro-streaming',
   standalone: true,
   imports: [
-    MatButton,
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatInput,
-    FormsModule,
     ChatComponent,
   ],
   template: `

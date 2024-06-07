@@ -25,7 +25,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
               Text-and-images input
             </mat-list-item>
             <mat-list-item role="listitem" routerLink="gemini-pro-streaming">
-              Content as is created using streaming
+              Content created using streaming
             </mat-list-item>
             <!-- <mat-list-item role="listitem" routerLink="gemini-pro">
               Gemini Pro With Vertex AI Via REST

@@ -1,9 +1,4 @@
-import { NgClass, NgFor } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
@@ -49,15 +44,6 @@ const chat = model.startChat({
   selector: 'ga-gemini-pro-chat',
   standalone: true,
   imports: [
-    MatButton,
-    MatFormField,
-    MatLabel,
-    ReactiveFormsModule,
-    MatInput,
-    MatError,
-    FormsModule,
-    NgFor,
-    NgClass,
     ChatComponent,
   ],
   template: `

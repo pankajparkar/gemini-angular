@@ -1,10 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 
-import { MatButton } from '@angular/material/button';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
 import { FileConversionService } from '../services/file-conversion.service';
-import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
+import {
+  GoogleGenerativeAI,
+  HarmBlockThreshold,
+  HarmCategory,
+} from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
@@ -29,10 +30,6 @@ const model = genAI.getGenerativeModel({
   selector: 'ga-gemini-pro-vision-images',
   standalone: true,
   imports: [
-    MatButton,
-    MatFormField,
-    MatLabel,
-    MatInput,
     ChatComponent,
   ],
   template: `
