@@ -18,13 +18,13 @@ import { MatToolbar } from '@angular/material/toolbar';
       <mat-icon>menu</mat-icon>
     </button>
     <span>Gemini Angular</span>
-    <span class="spacer"></span>
+    <!-- <span class="spacer"></span>
     <button mat-icon-button>
       <mat-icon>favorite</mat-icon>
     </button>
     <button mat-icon-button>
       <mat-icon>share</mat-icon>
-    </button>
+    </button> -->
   </mat-toolbar>
   `,
   styles: `

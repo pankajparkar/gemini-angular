@@ -61,7 +61,7 @@ const chat = model.startChat({
     ChatComponent,
   ],
   template: `
-    <h2>Chat</h2>
+    <h2>Multi-turn conversations (chat)</h2>
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"

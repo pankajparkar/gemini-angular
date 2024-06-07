@@ -16,16 +16,16 @@ import { RouterLink, RouterOutlet } from '@angular/router';
         <p>
           <mat-list role="list" (click)="sidenav()?.toggle()">
             <mat-list-item role="listitem" routerLink="gemini-pro">
-              Gemini Pro
+              Text from text-only input
             </mat-list-item>
             <mat-list-item role="listitem" routerLink="gemini-pro-chat">
-              Gemini ProChat
+              Multi-turn conversations
             </mat-list-item>
             <mat-list-item role="listitem" routerLink="gemini-pro-vision-images">
-              Gemini Pro Vision Images
+              Text-and-images input
             </mat-list-item>
             <mat-list-item role="listitem" routerLink="gemini-pro-streaming">
-              Gemini Pro Streaming
+              Content as is created using streaming
             </mat-list-item>
             <!-- <mat-list-item role="listitem" routerLink="gemini-pro">
               Gemini Pro With Vertex AI Via REST

@@ -41,7 +41,7 @@ const model = genAI.getGenerativeModel({
     ChatComponent,
   ],
   template: `
-    <h2>Chat</h2>
+    <h2>Content as is created using streaming (stream)</h2>
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
