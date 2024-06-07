@@ -6,6 +6,26 @@ import { MatInput } from '@angular/material/input';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 
+// Gemini Client
+const genAI = new GoogleGenerativeAI(environment.API_KEY);
+const generationConfig = {
+  safetySettings: [
+    {
+      category: HarmCategory.HARM_CATEGORY_HARASSMENT,
+      threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    },
+  ],
+  temperature: 0.9,
+  top_p: 1,
+  top_k: 32,
+  maxOutputTokens: 100,
+};
+
+const model = genAI.getGenerativeModel({
+  model: 'gemini-pro',
+  ...generationConfig,
+});
+
 @Component({
   selector: 'ga-gemini-pro-streaming',
   standalone: true,
@@ -38,25 +58,6 @@ export class GeminiProStreamingComponent {
   }
 
   async testGeminiProStreaming() {
-    // Gemini Client
-    const genAI = new GoogleGenerativeAI(environment.API_KEY);
-    const generationConfig = {
-      safetySettings: [
-        {
-          category: HarmCategory.HARM_CATEGORY_HARASSMENT,
-          threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        },
-      ],
-      temperature: 0.9,
-      top_p: 1,
-      top_k: 32,
-      maxOutputTokens: 100,
-    };
-    const model = genAI.getGenerativeModel({
-      model: 'gemini-pro',
-      ...generationConfig,
-    });
-
     const prompt = {
       contents: [
         {
@@ -70,7 +71,6 @@ export class GeminiProStreamingComponent {
       ],
     };
     const streamingResp = await model.generateContentStream(prompt);
-
     for await (const item of streamingResp.stream) {
       console.log('stream chunk: ' + item.text());
     }

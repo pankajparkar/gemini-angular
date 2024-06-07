@@ -49,8 +49,9 @@ import { MatIcon } from '@angular/material/icon';
       display: flex;
       flex-flow: row noWrap;
       padding: 12px;
-      position: absolute;
+      position: fixed;
       width: 100%;
+      background: white;
 
       .mat-mdc-form-field {
         display: flex;
