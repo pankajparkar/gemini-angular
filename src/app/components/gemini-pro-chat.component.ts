@@ -22,7 +22,7 @@ const generationConfig = {
       threshold: HarmBlockThreshold.BLOCK_ONLY_HIGH,
     },
   ],
-  //maxOutputTokens: 100,
+  maxOutputTokens: 100,
 };
 const model = genAI.getGenerativeModel({
   model: 'gemini-pro',

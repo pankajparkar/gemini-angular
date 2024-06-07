@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, input, model, output, signal } from '@angular/core';
+import { Component, ElementRef, effect, input, model, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { Message } from '../models';
@@ -21,7 +21,7 @@ import { MatIcon } from '@angular/material/icon';
     MatIconButton,
   ],
   template: `
-    <ul class="chat-list">
+    <ul class="chat-list" #chatList>
       @for (message of messages(); track $index) {
         <li
           [ngClass]="{
@@ -66,6 +66,8 @@ import { MatIcon } from '@angular/material/icon';
       list-style: none;
       padding: 12px;
       position: relative;
+      height: calc(100% - 200px);
+      overflow-y: scroll;
     }
 
     .left-message,
@@ -91,6 +93,19 @@ export class ChatComponent {
   messages = input<Message[]>([]);
   send = output<string>();
   text = model('');
+  chatListEl = viewChild<ElementRef>('chatList');
+
+  constructor() {
+    effect(() => {
+      if (this.messages().length) {
+        const element = this.chatListEl()?.nativeElement;
+        element.scroll({
+          top: element.scrollHeight,
+          behavior: 'smooth',
+        });
+      }
+    });
+  }
 
   enter() {
     this.send.emit(this.text());
