@@ -32,7 +32,9 @@ import { MatInput } from '@angular/material/input';
 
     <ul>
       @for (message of messages(); track $index) {
-        <li>{{message}}</li>
+        <li>
+          <pre [innerHTML]="message"></pre>
+        </li>
       }
     </ul>
     <button mat-button (click)="enter()">

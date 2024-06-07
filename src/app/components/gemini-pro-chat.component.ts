@@ -6,11 +6,8 @@ import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
-
-interface Message {
-  content: string;
-  isUser: boolean; // Flag to identify user or received message
-}
+import { ChatComponent } from './chat.component';
+import { Message } from '../models';
 
 const messages = [
   { content: 'Hi there!', isUser: false, },
@@ -30,73 +27,33 @@ const messages = [
     FormsModule,
     NgFor,
     NgClass,
+    ChatComponent,
   ],
   template: `
     <h2>Chat</h2>
-    <ul class="chat-list">
-      @for (message of messages(); track $index) {
-        <li [ngClass]="{'left-message': !message.isUser, 'right-message': message.isUser}">
-          {{ message.content }}
-        </li>
-      }
-    </ul>
-
-    <div>
-      <mat-form-field>
-        <mat-label>Type your message...</mat-label>
-        <textarea matInput [(ngModel)]="text" placeholder="Type your message..."></textarea>
-      </mat-form-field>
-    </div>
-    @if (!text) {
-      <mat-error>{{errorMessage}}</mat-error>
-    }
-
-    <button mat-button (click)="enter()">
-      Enter
-    </button>
+    <ga-chat
+      [messages]="messages()"
+      (send)="enter($event)"
+    >
+    </ga-chat>
   `,
   styles: `
-    .chat-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .left-message,
-    .right-message {
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 5px;
-      max-width: 70%;
-    }
-
-    .left-message {
-      background-color: #eee;
-      text-align: left;
-    }
-
-    .right-message {
-      background-color: #ddd;
-      text-align: right;
-    }
+    
   `
 })
 export class GeminiProChatComponent {
-  text = model('');
   messages = signal<Message[]>(messages);
 
-  errorMessage = 'Field is mandatory';
-
-  enter() {
-    this.sendMessage(this.text().trim() ?? '');
-    this.testGeminiProChat(this.text());
-    this.text.set('');
+  enter(text: string) {
+    this.sendMessage(text);
+    this.testGeminiProChat(text);
   }
 
   private sendMessage(text: string, isUser: boolean = true) {
     if (!text) {
       return;
     }
+
     this.messages.set([
       ...this.messages(),
       { content: text, isUser, }
