@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
+import { ChatComponent } from './chat.component';
+import { Message } from '../models';
 
 // Gemini Client
 const genAI = new GoogleGenerativeAI(environment.API_KEY);
@@ -36,37 +38,46 @@ const model = genAI.getGenerativeModel({
     ReactiveFormsModule,
     MatInput,
     FormsModule,
+    ChatComponent,
   ],
   template: `
-    <mat-form-field>
-      <mat-label>Enter your email</mat-label>
-      <input matInput
-        placeholder="pat@example.com"
-        required>
-    </mat-form-field>
-
-    <button mat-button (click)="process()">
-      Process
-    </button>
+    <h2>Chat</h2>
+    <ga-chat
+      [messages]="messages()"
+      (send)="enter($event)"
+    >
+    </ga-chat>
   `,
   styles: ``
 })
 export class GeminiProStreamingComponent {
+  messages = signal<Message[]>([{
+    content: 'Generate a poem.',
+    isUser: true,
+  }]);
 
-  process() {
-    this.testGeminiProStreaming();
+  enter(text: string) {
+    this.sendMessage(text);
+    this.testGeminiProStreaming(text);
   }
 
-  async testGeminiProStreaming() {
+  private sendMessage(text: string, isUser: boolean = true) {
+    if (!text) {
+      return;
+    }
+
+    this.messages.set([
+      ...this.messages(),
+      { content: text, isUser, }
+    ]);
+  }
+
+  async testGeminiProStreaming(text: string) {
     const prompt = {
       contents: [
         {
           role: 'user',
-          parts: [
-            {
-              text: 'Generate a poem.',
-            },
-          ],
+          parts: [{ text }],
         },
       ],
     };
@@ -74,7 +85,9 @@ export class GeminiProStreamingComponent {
     for await (const item of streamingResp.stream) {
       console.log('stream chunk: ' + item.text());
     }
-    console.log('aggregated response: ' + (await streamingResp.response).text());
+    const output = (await streamingResp.response).text()
+    console.log('aggregated response: ' + output);
+    this.sendMessage(output ?? '', false);
   }
 
 }

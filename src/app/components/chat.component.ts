@@ -75,7 +75,6 @@ import { MatIcon } from '@angular/material/icon';
       padding: 10px;
       border-radius: 5px;
       margin-bottom: 5px;
-      max-width: 70%;
     }
 
     .left-message {
