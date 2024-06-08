@@ -11,7 +11,8 @@ import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
 // const img = 'assets/program.png';
-const img = 'assets/baked_goods_2.jpeg';
+const img = 'assets/pankaj.jpeg';
+// const img = 'assets/baked_goods_2.jpeg';
 
 // Gemini Client
 const genAI = new GoogleGenerativeAI(environment.API_KEY);

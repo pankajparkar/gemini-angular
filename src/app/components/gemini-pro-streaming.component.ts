@@ -71,10 +71,11 @@ export class GeminiProStreamingComponent {
     const streamingResp = await model.generateContentStream(prompt);
     for await (const item of streamingResp.stream) {
       console.log('stream chunk: ' + item.text());
+      this.updateMessage(item.text() ?? '', false);
     }
     const output = (await streamingResp.response).text()
     console.log('aggregated response: ' + output);
-    this.updateMessage(output ?? '', false);
+
   }
 
 }
