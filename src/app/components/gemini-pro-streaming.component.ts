@@ -47,11 +47,11 @@ export class GeminiProStreamingComponent {
   }]);
 
   enter(text: string) {
-    this.sendMessage(text);
+    this.updateMessage(text);
     this.testGeminiProStreaming(text);
   }
 
-  private sendMessage(text: string, isUser: boolean = true) {
+  private updateMessage(text: string, isUser: boolean = true) {
     if (!text) {
       return;
     }
@@ -77,7 +77,7 @@ export class GeminiProStreamingComponent {
     }
     const output = (await streamingResp.response).text()
     console.log('aggregated response: ' + output);
-    this.sendMessage(output ?? '', false);
+    this.updateMessage(output ?? '', false);
   }
 
 }

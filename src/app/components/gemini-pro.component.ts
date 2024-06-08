@@ -40,11 +40,11 @@ export class GeminiProComponent {
   messages = signal<Message[]>([]);
 
   enter(text: string) {
-    this.sendMessage(text);
+    this.updateMessage(text);
     this.testGeminiPro(text);
   }
 
-  private sendMessage(text: string, isUser: boolean = true) {
+  private updateMessage(text: string, isUser: boolean = true) {
     if (!text) {
       return;
     }
@@ -60,6 +60,6 @@ export class GeminiProComponent {
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);
     console.log(response.text());
-    this.sendMessage(response.text(), false);
+    this.updateMessage(response.text(), false);
   }
 }

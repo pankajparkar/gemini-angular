@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 
 import { FileConversionService } from '../services/file-conversion.service';
 import {
@@ -40,17 +40,17 @@ const model = genAI.getGenerativeModel({
     >
     </ga-chat>
   `,
-  styles: ``
+  styles: ``,
 })
 export class GeminiProVisionImagesComponent {
   messages = signal<Message[]>([]);
 
   enter(text: string) {
-    this.sendMessage(text);
+    this.updateMessage(text);
     this.testGeminiProVisionImages(text);
   }
 
-  private sendMessage(text: string, isUser: boolean = true) {
+  private updateMessage(text: string, isUser: boolean = true) {
     if (!text) {
       return;
     }
@@ -90,7 +90,7 @@ export class GeminiProVisionImagesComponent {
       const response = await result.response;
       console.log(response.candidates?.[0].content.parts[0].text);
       console.log(response);
-      this.sendMessage(response.candidates?.[0].content.parts[0].text ?? '', false);
+      this.updateMessage(response.candidates?.[0].content.parts[0].text ?? '', false);
 
     } catch (error) {
       console.error('Error converting file to Base64', error);

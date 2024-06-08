@@ -9,6 +9,15 @@ const messages = [
   { content: 'Great to meet you. What would you like to know?!', isUser: false, },
 ];
 
+function transformToHistoryObject(msgs: Message[]) {
+  return msgs.map(
+    msg => ({
+      role: msg.isUser ? 'user' : 'model',
+      parts: [{ text: msg.content }],
+    }),
+  )
+}
+
 const genAI = new GoogleGenerativeAI(environment.API_KEY);
 const generationConfig = {
   safetySettings: [
@@ -22,22 +31,6 @@ const generationConfig = {
 const model = genAI.getGenerativeModel({
   model: 'gemini-pro',
   ...generationConfig,
-});
-
-const chat = model.startChat({
-  history: [
-    {
-      role: "user",
-      parts: [{ text: "Hi there!" }],
-    },
-    {
-      role: "model",
-      parts: [{ text: "Great to meet you. What would you like to know?" }],
-    },
-  ],
-  generationConfig: {
-    maxOutputTokens: 100,
-  },
 });
 
 @Component({
@@ -55,18 +48,17 @@ const chat = model.startChat({
     </ga-chat>
   `,
   styles: `
-    
   `
 })
 export class GeminiProChatComponent {
   messages = signal<Message[]>(messages);
 
   enter(text: string) {
-    this.sendMessage(text);
+    this.updateMessage(text);
     this.testGeminiProChat(text);
   }
 
-  private sendMessage(text: string, isUser: boolean = true) {
+  private updateMessage(text: string, isUser: boolean = true) {
     if (!text) {
       return;
     }
@@ -78,11 +70,17 @@ export class GeminiProChatComponent {
   }
 
   private async testGeminiProChat(prompt: string) {
+    const chat = model.startChat({
+      history: transformToHistoryObject(this.messages()),
+      generationConfig: {
+        maxOutputTokens: 100,
+      },
+    });
     const result = await chat.sendMessage(prompt);
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);
     console.log(response.text());
-    this.testGeminiProChat(response.text());
-    this.sendMessage(response.text(), false);
+    // this.testGeminiProChat(response.text());
+    this.updateMessage(response.text(), false);
   }
 }
