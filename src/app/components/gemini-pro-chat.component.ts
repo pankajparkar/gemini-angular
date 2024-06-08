@@ -40,7 +40,7 @@ const model = genAI.getGenerativeModel({
     ChatComponent,
   ],
   template: `
-    <h2>Multi-turn conversations (chat)</h2>
+    <h4>Multi-turn conversations (chat)</h4>
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"

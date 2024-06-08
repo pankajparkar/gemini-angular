@@ -33,7 +33,7 @@ const model = genAI.getGenerativeModel({
     ChatComponent,
   ],
   template: `
-    <h2>Text from text-and-images input (multimodal)</h2>
+    <h4>Text from text-and-images input (multimodal)</h4>
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
