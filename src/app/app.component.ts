@@ -15,6 +15,9 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       <mat-sidenav [mode]="'push'">
         <p>
           <mat-list role="list" (click)="sidenav()?.toggle()">
+            <mat-list-item role="listitem" routerLink="welcome">
+              Welcome
+            </mat-list-item>
             <mat-list-item role="listitem" routerLink="gemini-pro">
               Text from text-only input
             </mat-list-item>
@@ -27,9 +30,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <mat-list-item role="listitem" routerLink="gemini-pro-streaming">
               Content created using streaming
             </mat-list-item>
-            <!-- <mat-list-item role="listitem" routerLink="gemini-pro">
-              Gemini Pro With Vertex AI Via REST
-            </mat-list-item> -->
           </mat-list>
         </p>
       </mat-sidenav>

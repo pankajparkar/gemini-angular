@@ -1,13 +1,22 @@
 import { Component } from '@angular/core';
+// import { GeminiProTextComponent } from './gemini-pro-text.component';
 
 @Component({
   selector: 'ga-welcome',
   standalone: true,
-  imports: [],
+  imports: [
+    // GeminiProTextComponent,
+  ],
   template: `
     <div class="welcome-container">
       welcome to the work of AI!
     </div>
+
+    <!-- @defer (
+      on timer(5s)
+    ) {
+      <ga-gemini-pro-text></ga-gemini-pro-text>
+    } -->
   `,
   styles: `
     .welcome-container {
@@ -21,5 +30,4 @@ import { Component } from '@angular/core';
   `
 })
 export class WelcomeComponent {
-
 }
