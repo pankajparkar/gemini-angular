@@ -48,7 +48,7 @@ export class GeminiProStreamingComponent {
 
   enter(text: string) {
     this.updateMessage(text);
-    this.testGeminiProStreaming(text);
+    this.sendMessage(text);
   }
 
   private updateMessage(text: string, isUser: boolean = true) {
@@ -62,7 +62,7 @@ export class GeminiProStreamingComponent {
     ]);
   }
 
-  async testGeminiProStreaming(text: string) {
+  async sendMessage(text: string) {
     const prompt = {
       contents: [
         {

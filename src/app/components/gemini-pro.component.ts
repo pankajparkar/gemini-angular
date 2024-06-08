@@ -41,7 +41,7 @@ export class GeminiProComponent {
 
   enter(text: string) {
     this.updateMessage(text);
-    this.testGeminiPro(text);
+    this.sendMessage(text);
   }
 
   private updateMessage(text: string, isUser: boolean = true) {
@@ -55,7 +55,7 @@ export class GeminiProComponent {
     ]);
   }
 
-  async testGeminiPro(prompt: string) {
+  async sendMessage(prompt: string) {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);

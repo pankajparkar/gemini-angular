@@ -47,7 +47,7 @@ export class GeminiProVisionImagesComponent {
 
   enter(text: string) {
     this.updateMessage(text);
-    this.testGeminiProVisionImages(text);
+    this.sendMessage(text);
   }
 
   private updateMessage(text: string, isUser: boolean = true) {
@@ -62,7 +62,7 @@ export class GeminiProVisionImagesComponent {
   }
   private fileConversionService = inject(FileConversionService);
 
-  async testGeminiProVisionImages(text: string) {
+  async sendMessage(text: string) {
     try {
       let imageBase64 = await this.fileConversionService.convertToBase64(
         'assets/baked_goods_2.jpeg'

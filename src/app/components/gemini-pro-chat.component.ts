@@ -55,7 +55,7 @@ export class GeminiProChatComponent {
 
   enter(text: string) {
     this.updateMessage(text);
-    this.testGeminiProChat(text);
+    this.sendMessage(text);
   }
 
   private updateMessage(text: string, isUser: boolean = true) {
@@ -69,7 +69,7 @@ export class GeminiProChatComponent {
     ]);
   }
 
-  private async testGeminiProChat(prompt: string) {
+  private async sendMessage(prompt: string) {
     const chat = model.startChat({
       history: transformToHistoryObject(this.messages()),
       generationConfig: {
@@ -80,7 +80,6 @@ export class GeminiProChatComponent {
     const response = await result.response;
     console.log(response.candidates?.[0].content.parts[0].text);
     console.log(response.text());
-    // this.testGeminiProChat(response.text());
     this.updateMessage(response.text(), false);
   }
 }
