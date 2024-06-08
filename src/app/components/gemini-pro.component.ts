@@ -27,7 +27,7 @@ const model = genAI.getGenerativeModel({
     ChatComponent,
   ],
   template: `
-    <h4>Text from text-only input (text)</h4>
+    <h5>Text from text-only input (text)</h5>
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
