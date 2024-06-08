@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { GeminiProComponent } from './components/gemini-pro.component';
+import { GeminiProTextComponent } from './components/gemini-pro-text.component';
 import { GeminiProChatComponent } from './components/gemini-pro-chat.component';
 import { GeminiProVisionImagesComponent } from './components/gemini-pro-vision-images.component';
 import { GeminiProStreamingComponent } from './components/gemini-pro-streaming.component';
@@ -12,7 +12,7 @@ const routes: Routes = [
     },
     {
         path: 'gemini-pro',
-        component: GeminiProComponent
+        component: GeminiProTextComponent
     },
     {
         path: 'gemini-pro-chat',

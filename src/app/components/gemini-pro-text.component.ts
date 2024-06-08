@@ -21,7 +21,7 @@ const model = genAI.getGenerativeModel({
 });
 
 @Component({
-  selector: 'ga-gemini-pro',
+  selector: 'ga-gemini-pro-text',
   standalone: true,
   imports: [
     ChatComponent,
@@ -36,7 +36,7 @@ const model = genAI.getGenerativeModel({
   `,
   styles: ``
 })
-export class GeminiProComponent {
+export class GeminiProTextComponent {
   messages = signal<Message[]>([]);
 
   enter(text: string) {
