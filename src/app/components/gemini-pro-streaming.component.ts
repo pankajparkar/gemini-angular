@@ -41,10 +41,7 @@ const model = genAI.getGenerativeModel({
   styles: ``
 })
 export class GeminiProStreamingComponent {
-  messages = signal<Message[]>([{
-    content: 'Generate a poem.',
-    isUser: true,
-  }]);
+  messages = signal<Message[]>([]);
 
   enter(text: string) {
     this.updateMessage(text);

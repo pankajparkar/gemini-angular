@@ -28,8 +28,15 @@ import { MatIcon } from '@angular/material/icon';
             'left-message': !message.isUser,
             'right-message': message.isUser,
           }">
-          {{ message.content }}
+          <pre [innerHTML]="message.content">
+          </pre>
         </li>
+      }
+
+      @empty {
+        <div class="start-conversation-msg">
+          Let's start conversation with Gemini
+        </div>
       }
     </ul>
 
@@ -68,23 +75,40 @@ import { MatIcon } from '@angular/material/icon';
       position: relative;
       height: calc(100% - 200px);
       overflow-y: scroll;
-    }
 
-    .left-message,
-    .right-message {
-      padding: 10px;
-      border-radius: 5px;
-      margin-bottom: 5px;
-    }
+      .left-message,
+      .right-message {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      }
 
-    .left-message {
-      background-color: #eee;
-      text-align: left;
-    }
+      .left-message {
+        background-color: #eee;
+        text-align: left;
+      }
 
-    .right-message {
-      background-color: #ddd;
-      text-align: right;
+      .right-message {
+        background-color: #ddd;
+        text-align: right;
+      }
+
+      li pre {
+        font-family: 'Roboto';
+        margin: 0 auto;
+        white-space: pre-wrap;       /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+        white-space: -pre-wrap;      /* Opera 4-6 */
+        white-space: -o-pre-wrap;    /* Opera 7 */
+        word-wrap: break-word;       /* Internet Explorer 5.5+ */
+      }
+
+      .start-conversation-msg {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        align-items: center;
+      }
     }
   `
 })

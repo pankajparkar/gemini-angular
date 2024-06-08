@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
+const img = 'assets/baked_goods_2.jpeg';
+
 // Gemini Client
 const genAI = new GoogleGenerativeAI(environment.API_KEY);
 const generationConfig = {
@@ -34,6 +36,7 @@ const model = genAI.getGenerativeModel({
   ],
   template: `
     <h5>Text from text-and-images input (multimodal)</h5>
+    <img [src]="img" />
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
@@ -44,6 +47,7 @@ const model = genAI.getGenerativeModel({
 })
 export class GeminiProVisionImagesComponent {
   messages = signal<Message[]>([]);
+  img = img;
 
   enter(text: string) {
     this.updateMessage(text);
@@ -64,9 +68,7 @@ export class GeminiProVisionImagesComponent {
 
   async sendMessage(text: string) {
     try {
-      let imageBase64 = await this.fileConversionService.convertToBase64(
-        'assets/baked_goods_2.jpeg'
-      );
+      let imageBase64 = await this.fileConversionService.convertToBase64(img);
 
       // Check for successful conversion to Base64
       if (typeof imageBase64 !== 'string') {
