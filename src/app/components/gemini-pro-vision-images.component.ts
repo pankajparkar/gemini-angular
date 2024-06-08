@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 
 import { FileConversionService } from '../services/file-conversion.service';
 import {
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
+// const img = 'assets/program.png';
 const img = 'assets/baked_goods_2.jpeg';
 
 // Gemini Client
@@ -36,7 +37,7 @@ const model = genAI.getGenerativeModel({
   ],
   template: `
     <h5>Text from text-and-images input (multimodal)</h5>
-    <img [src]="img" />
+    <img width="400" [src]="img" />
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
