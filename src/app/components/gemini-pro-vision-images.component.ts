@@ -26,7 +26,8 @@ const generationConfig = {
   maxOutputTokens: 100,
 };
 const model = genAI.getGenerativeModel({
-  model: 'gemini-pro-vision',
+  // model: 'gemini-pro-vision', // deprecated
+  model: 'gemini-1.5-pro',
   ...generationConfig,
 });
 

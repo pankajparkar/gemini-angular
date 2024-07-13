@@ -29,7 +29,7 @@ const generationConfig = {
   maxOutputTokens: 100,
 };
 const model = genAI.getGenerativeModel({
-  model: 'gemini-pro',
+  model: 'gemini-1.5-pro',
   ...generationConfig,
 });
 
