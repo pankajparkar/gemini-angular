@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
+import { MarkdownService } from '../services/markdown.service';
 
 // Gemini Client
 const genAI = new GoogleGenerativeAI(environment.API_KEY);
@@ -42,6 +43,7 @@ const model = genAI.getGenerativeModel({
 })
 export class GeminiProStreamingComponent {
   messages = signal<Message[]>([]);
+  markdown = inject(MarkdownService);
 
   enter(text: string) {
     this.updateMessage(text);

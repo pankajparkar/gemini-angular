@@ -32,7 +32,7 @@
               "@angular/material/prebuilt-themes/azure-blue.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": ["./node_modules/showdown/dist/showdown.min.js"]
           },
           "configurations": {
             "production": {

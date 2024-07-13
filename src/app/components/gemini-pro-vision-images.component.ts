@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
 import { ChatComponent } from './chat.component';
 import { Message } from '../models';
 
-// const img = 'assets/program.png';
-const img = 'assets/pankaj.jpeg';
+const img = 'assets/program.png';
+// const img = 'assets/pankaj.jpeg';
 // const img = 'assets/baked_goods_2.jpeg';
 
 // Gemini Client
@@ -39,14 +39,18 @@ const model = genAI.getGenerativeModel({
   ],
   template: `
     <h5>Text from text-and-images input (multimodal)</h5>
-    <img width="400" [src]="img" />
+    <img width="350" [src]="img" />
     <ga-chat
       [messages]="messages()"
       (send)="enter($event)"
     >
     </ga-chat>
   `,
-  styles: ``,
+  styles: `
+    :host ::ng-deep ga-chat .chat-list {
+      height: calc(100% - 450px);
+    }
+  `,
 })
 export class GeminiProVisionImagesComponent {
   messages = signal<Message[]>([]);

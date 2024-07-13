@@ -1,11 +1,12 @@
 import { NgClass } from '@angular/common';
-import { Component, ElementRef, effect, input, model, output, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, effect, inject, input, model, output, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { Message } from '../models';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
+import { MarkdownService } from '../services/markdown.service';
 
 @Component({
   selector: 'ga-chat',
@@ -28,8 +29,8 @@ import { MatIcon } from '@angular/material/icon';
             'left-message': !message.isUser,
             'right-message': message.isUser,
           }">
-          <pre [innerHTML]="message.content">
-          </pre>
+          <div [innerHTML]="getHtml(message.content)">
+          </div>
         </li>
       }
 
@@ -117,6 +118,7 @@ export class ChatComponent {
   send = output<string>();
   text = model('');
   chatListEl = viewChild<ElementRef>('chatList');
+  mnarkdown = inject(MarkdownService);
 
   constructor() {
     effect(() => {
@@ -128,6 +130,10 @@ export class ChatComponent {
         });
       }
     });
+  }
+
+  getHtml(text: string) {
+    return this.mnarkdown.getHtml(text);
   }
 
   enter() {

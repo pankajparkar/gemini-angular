@@ -24,6 +24,7 @@
     "@google/generative-ai": "^0.11.3",
     "gh-packages": "^0.3.3",
     "rxjs": "~7.5.0",
+    "showdown": "^2.1.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.6"
   },
